@@ -1,21 +1,27 @@
-public class Piece{
-	private boolean alive;
-	private String position;
+
+public class Piece implements Comparable<Piece>{
+	String pos;
+	Double chance;
 	
-	public Piece(boolean alive, String position) {
-		this.alive = alive;
-		this.position = position;
+	public Piece(String pos, double chance) {
+		super();
+		this.pos = pos;
+		this.chance = chance;
 	}
-	public boolean isAlive() {
-		return alive;
+	public String getPos() {
+		return pos;
 	}
-	public void setAlive(boolean alive) {
-		this.alive = alive;
+	public void setPos(String pos) {
+		this.pos = pos;
 	}
-	public String getPosition() {
-		return position;
+	public Double getChance() {
+		return chance;
 	}
-	public void setPosition(String position) {
-		this.position = position;
+	public void setChance(double chance) {
+		this.chance = chance;
+	}
+	@Override
+	public int compareTo(Piece arg0) {
+		return -1*this.getChance().compareTo(arg0.getChance());
 	}
 }
