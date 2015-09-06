@@ -1,6 +1,3 @@
-import java.util.Scanner;
-
-
 /*
  * numbering scheme - white pawns from left to right - 0-7 
  * 	  white rook left - 8
@@ -20,7 +17,7 @@ import java.util.Scanner;
 public class Engine {
 	private boolean[] isAlive = new boolean[32];
 	private int[][] board = new int[8][8];
-	
+	int moveCount=0;
 	Engine(){
 		reset();
 	}
@@ -55,30 +52,26 @@ public class Engine {
 	}
 	
 	public void runGame(String arg[]){
-		//String tempBlackRook,tempBlackKnight,tempBlackBishop,tempWhiteRook,tempWhiteKnight,tempWhiteBishop;
-		String whiteMove,blackMove;
+		String whiteMove,blackMove,curMove;
 		for(int j=1;j<arg.length-1;j++){
-			//System.out.println("----------------------------------");
-			//System.out.println("Move " + j);
-			String curMove = arg[j].trim();
+			curMove = arg[j].trim();
 			whiteMove = curMove.substring(0, curMove.indexOf(" "));
-			//System.out.println("processing white move " + whiteMove);
 			makeMove(whiteMove);
 			blackMove = curMove.substring(curMove.indexOf(" ")).trim();
-			//System.out.println("processing black move " + blackMove);
 			makeMove(blackMove);
-			//System.out.println("board after move " + j);
-			//this.showBoard();
 		}
-		Scanner scanner = new Scanner(arg[arg.length-1]);
-		scanner.useDelimiter(" ");
-		while(scanner.hasNext()){
-			whiteMove = scanner.next();
-			if(whiteMove.contains("-") || whiteMove.contains("*"))
+		curMove = arg[arg.length-1];
+		if(curMove.equalsIgnoreCase("1-0") || curMove.equalsIgnoreCase("0-1") || curMove.equalsIgnoreCase("1/2-1/2"))
+			return;
+		whiteMove = curMove.substring(0, curMove.indexOf(" "));
+		if(whiteMove.contains("-") || whiteMove.contains("*"))
+			return;
+		makeMove(whiteMove);
+		if(curMove.length()-whiteMove.length() > 2){
+			blackMove = curMove.substring(curMove.indexOf(" ")).trim();
+			if(blackMove.contains("-") || blackMove.contains("*"))
 				return;
-			//System.out.println("making move " + whiteMove);
-			makeMove(whiteMove);
-			//this.showBoard();
+			makeMove(blackMove);
 		}
 	}
 	

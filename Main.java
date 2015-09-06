@@ -16,7 +16,7 @@ public class Main {
 
 	public static void main(String[] args) throws FileNotFoundException {
 		long startTime = System.currentTimeMillis();
-		Scanner input = new Scanner(new File("/home/danish-shark/workspace/ChessSurvivalAnalysis/src/input.pgn"));
+		Scanner input = new Scanner(new File("/home/danish-shark/workspace/ChessSurvivalAnalysis/input.pgn"));
 		input.useDelimiter("\n\n");
 		double i=0,prev=0,cur=0;
 		Engine engine = new Engine();
