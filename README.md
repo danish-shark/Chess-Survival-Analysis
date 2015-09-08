@@ -1,18 +1,18 @@
 # Chess-Survival-Analysis
 Java code to calculate the average survival probability of chess pieces given a database of over 275,000 chess games.
-All the games are played between players who are GMs or Elo 2500+; games played anytime (also before players won the title).
+All the games are played between players who are GMs or Elo 2500+.
 
 ## Dataset
-All the games are stored in a PGN file taken from [here](http://chess-db.com/public/downloads/download.jsp?c=1)
-We need to convert the games from standard algebraic notation (Be5) to long algebraic notation (Bd4Be5) which is easier to work with. We also need to get rid of any extra annotations to make parsing easier and more efficient. Thankfully,pgn-extract is built for doing exactly that.
+All the games are stored in a PGN file taken from [here](http://chess-db.com/public/downloads/download.jsp?c=1).
+We need to convert the games from standard algebraic notation (Be5) to long algebraic notation (Bd4Be5) which is easier to work with. We also need to get rid of any extra annotations to make the parsing easier and more efficient. Thankfully,pgn-extract is built for doing exactly that.
 
 ### Installing pgn-extract
 
- ``` apt-get install pgn-extract ``` 
+ ``` $ sudo apt-get install pgn-extract ``` 
 
 ### Pre Processing file
 
- ``` pgn-extract --output <output filename> -Wlalg  -C -N -V --notags <input file> ``` 
+ ``` $ pgn-extract --output <output filename> -Wlalg  -C -N -V --notags <input file> ``` 
 
 ## Results
 The results obtained are as follows - 
