@@ -12,7 +12,7 @@ We need to convert the games from standard algebraic notation (Be5) to long alge
 
 ### Pre Processing file
 
- ``` $ pgn-extract --output <output filename> -Wlalg  -C -N -V --notags <input file> ``` 
+ ``` $ pgn-extract --output <output file> -Wlalg  -C -N -V --notags <input file> ``` 
 
 ## Results
 The results obtained are as follows - 
