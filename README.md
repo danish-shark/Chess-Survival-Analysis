@@ -1,5 +1,5 @@
 # Chess-Survival-Analysis
-Java code to calculate the average survival probability of chess pieces given a database of over 275,000 chess games.
+Java code to calculate the average survival probability of chess pieces given a dataset of over 275,000 chess games.
 All the games are played between players who are GMs or Elo 2500+.
 
 ## Dataset
