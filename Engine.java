@@ -12,8 +12,6 @@
  */
 
 
-//http://chess-db.com/public/game.jsp?id=3800024.1000268.9577216.28885
-
 public class Engine {
 	private boolean[] isAlive = new boolean[32];
 	private int[][] board = new int[8][8];

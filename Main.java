@@ -1,29 +1,43 @@
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Scanner;
-
-
-//pgn-extract --output input.pgn -Wlalg  -C -N -V --notags /home/danish-shark/Downloads/December1.pgn
 
 public class Main {
 	private static double[] count = new double[32];
 	private static boolean[] temp = new boolean[32];
-	private static String[] startingPositions = {"a2","b2","c2","d2","e2","f2","g2","h2",
-			"a1","b1","c1","d1","e1","f1","g1","h1",
-			"a7","b7","c7","d7","e7","f7","g7","h7",
-			"a8","b8","c8","d8","e8","f8","g8","h8"};
-
-	public static void main(String[] args) throws FileNotFoundException {
+	private static String[] pieceNames = {"White Pawn(a2)","White Pawn(b2)","White Pawn(c2)","White Pawn(d2)","White Pawn(e2)","White Pawn(f2)","White Pawn(g2)","White Pawn(h2)",
+										"White Rook(a1)","White Knight(b1)","White Bishop(c1)","White Queen(d1)","White King(e1)","White Bishop(f1)","White Knight(g1)","White Rook(h1)",
+										"Black Pawn(a7)","Black Pawn(b7)","Black Pawn(c7)","Black Pawn(d7)","Black Pawn(e7)","Black Pawn(f7)","Black Pawn(g7)","Black Pawn(h7)",
+										"Black Rook(a8)","Black Knight(b8)","Black Bishop(c8)","Black Queen(d8)","Black King(e8)","Black Bishop(f8)","Black Knight(g8)","Black Rook(h8)"};
+	
+	public static void main(String[] args) throws IOException {
 		long startTime = System.currentTimeMillis();
-		Scanner input = new Scanner(new File("/home/danish-shark/workspace/ChessSurvivalAnalysis/input.pgn"));
-		input.useDelimiter("\n\n");
+		BufferedReader ip = new BufferedReader(new FileReader("/home/danish-shark/workspace/ChessSurvivalAnalysis/input.pgn"));
+		String newstr="",linetwo=null,lineone=null;
 		double i=0,prev=0,cur=0;
 		Engine engine = new Engine();
 		System.out.print("Analysing games ");
-		while(input.hasNext()){
+		while((linetwo = ip.readLine()) !=null){
+			newstr="";lineone=linetwo;
+			while((lineone = ip.readLine()) !=null){
+				if(lineone.length()>0){
+					int beg=lineone.length() < 4 ? 0 : (lineone.length()-4),end=lineone.length();
+					char lastChar = lineone.charAt(end-1);
+					if(lineone.substring(beg,end).contains("-")
+							|| lastChar == '*'){
+						newstr = newstr + lineone;
+						break;
+					}
+					newstr = newstr + lineone + (lastChar != ' ' ? " " : "");
+				}
+			}
 			i++;
-			temp = engine.newGame(input.next().replaceAll("\n"," ").split("[0-9]+[.][ ]*"));
+			if(newstr.length() > 1)
+				temp = engine.newGame(newstr.split("[0-9]+[.][ ]*"));
 			for(int j=0;j<32;j++)
 				if(temp[j])
 					count[j]++;
@@ -42,10 +56,10 @@ public class Main {
 		System.out.println("Starting Square " + " Survival Rate");
 		Piece[] piece = new Piece[32];
 		for(int j=0;j<32;j++)
-			piece[j] = new Piece(startingPositions[j],(Math.round((count[j]/i)*100 * 100.0) / 100.0));
+			piece[j] = new Piece(pieceNames[j],(Math.round((count[j]/i)*100 * 100.0) / 100.0));
 		Arrays.sort(piece, 0, piece.length);
 		for(int j=0;j<32;j++)
-			System.out.println("     " + piece[j].getPos() + "             " + piece[j].getChance() + "%");
-		input.close();
+			System.out.printf("%-20s %.2f%%\n", piece[j].getPos(), piece[j].getChance());
+		ip.close();
 	}
 }
